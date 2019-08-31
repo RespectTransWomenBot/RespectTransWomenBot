@@ -21,7 +21,7 @@ with open("D:\Reddit Bots\Respect Trans Women\blockedsubreddits.txt", "r") as fs
 #e.g.
 #shemale
 #ladyboy
-trigger_words = [] #Initialize it so the bot doesn't crash if we can't open the file
+trigger_words = ["shemale", "ladyboy", "tranny", "trannie", "she-man", "transvestite", "chick with dick", "chicks with dicks", "dickgirl", "men with tits", "heshe", "he-she"] #Initialize it so the bot doesn't crash if we can't open the file
 with open("D:\Reddit Bots\Respect Trans Women\triggerwords.txt", "r") as fs: #Path to .txt containing words we look for
     trigger_words = fs.read().split('\n') #old list: trigger_words = ["shemale", "ladyboy", "tranny", "trannie", "she-man", "transvestite", "chick with dick", "chicks with dicks", "dickgirl", "men with tits", "heshe", "he-she"]
 
