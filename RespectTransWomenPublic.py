@@ -32,7 +32,7 @@ for comment in comments: #for each comment in the comments stream. the current c
     x += 1 #add 1 to the number
     if str(comment.subreddit).lower() in blocked_subreddits: #Check if we have the subreddit blacklisted since filtering subreddits with PRAW only works on submissions and not comments
         continue
-    text = str(comment.body) # Fetch body
+    text = str(comment.body).lower() # Fetch body
     try:
         author = str(comment.author) # Fetch author
     except AttributeError: #check if the author has been deleted
@@ -48,7 +48,7 @@ for comment in comments: #for each comment in the comments stream. the current c
 
     caught_words = []
     for i in trigger_words:
-        if (i in text.lower()) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
+        if (i in text) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
             caught_words.append(i)
     message = "Please do not use "
     caught_len = len(caught_words)
