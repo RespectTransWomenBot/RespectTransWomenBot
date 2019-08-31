@@ -14,7 +14,7 @@ f = open("D:\Reddit Bots\Respect Trans Women\repliedto.txt", "r+")
 #gaysoundsshitposts
 blocked_subreddits = [] #Initialize it so the bot doesn't crash if we can't open the file
 with open("D:\Reddit Bots\Respect Trans Women\blockedsubreddits.txt", "r") as fs: #Path to .txt containing subs we don't post in
-    blocked_subreddits = fs.read().split('\n')
+    blocked_subreddits = fs.read().lower().split('\n')
 
 #triggerwords.txt formatting:
 #triggerword\n (no \n on last line)
@@ -23,14 +23,14 @@ with open("D:\Reddit Bots\Respect Trans Women\blockedsubreddits.txt", "r") as fs
 #ladyboy
 trigger_words = ["shemale", "ladyboy", "tranny", "trannie", "she-man", "transvestite", "chick with dick", "chicks with dicks", "dickgirl", "men with tits", "heshe", "he-she"] #Initialize it so the bot doesn't crash if we can't open the file
 with open("D:\Reddit Bots\Respect Trans Women\triggerwords.txt", "r") as fs: #Path to .txt containing words we look for
-    trigger_words = fs.read().split('\n') #old list: trigger_words = ["shemale", "ladyboy", "tranny", "trannie", "she-man", "transvestite", "chick with dick", "chicks with dicks", "dickgirl", "men with tits", "heshe", "he-she"]
+    trigger_words = fs.read().lower().split('\n')
 
 comments = subreddit.stream.comments() # get the comment stream
 x = 1 #for the counter
 for comment in comments: #for each comment in the comments stream. the current comment being processed is called "comment"
     print("found new comment! processing... (" + str(x) + ")") #the str(x) thing is printing the number of the comment being proccesed
     x += 1 #add 1 to the number
-    if str(comment.subreddit) in blocked_subreddits: #Check if we have the subreddit blacklisted since filtering subreddits with PRAW only works on submissions and not comments
+    if str(comment.subreddit).lower() in blocked_subreddits: #Check if we have the subreddit blacklisted since filtering subreddits with PRAW only works on submissions and not comments
         continue
     text = str(comment.body) # Fetch body
     try:
@@ -48,7 +48,7 @@ for comment in comments: #for each comment in the comments stream. the current c
 
     caught_words = []
     for i in trigger_words:
-        if (i in text.lower) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
+        if (i in text.lower()) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
             caught_words.append(i)
     message = "Please do not use "
     caught_len = len(caught_words)
