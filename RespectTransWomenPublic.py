@@ -45,38 +45,31 @@ for comment in comments: #for each comment in the comments stream. the current c
         #myself
         print("Comment is by myself")
         continue
-
     caught_words = []
     for i in trigger_words:
         if (i in text) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
             caught_words.append(i)
-    message = "Please do not use "
-    caught_len = len(caught_words)
-    caught_iter = 1
-    if caught_len > 2:
-        for i in caught_words:
-            if caught_len - caught_iter > 0: #Format the message in the form of "Please do not use a, b, or c. It is..."
-                message += i + ", "
-            else:
-                message += "or " + i
-            caught_iter += 1
-    elif caught_len == 2:
-        for i in caught_words:
-            if caught_len - caught_iter > 0: #Format the message in the form of "Please do not use a or b. It is..."
-                message += i
-            else:
-                message += " or " + i
-            caught_iter += 1
-    else:
-        for i in caught_words:
-            message += i #Format the message in the form of "Please do not use a. It is..."
-    message += ". It is derogatory and a slur. Please use 'trans woman' instead.\n\n_____\n\n This is a bot."
     if caught_words:
         if comment.id in f.read(): #if the comment is already in the file, bot has replied to it.
             print("ALREADY IN FILE")
         else:
             # Generate a message
             print("Attempting Answer")
+            message = "Please do not use "
+            caught_len = len(caught_words)
+            if caught_len > 2:
+                caught_iter = 1
+                for i in caught_words:
+                    if caught_len - caught_iter > 0: #Format the message in the form of "Please do not use a, b, or c. It is..."
+                        message += i + ", "
+                    else:
+                        message += "or " + i
+                    caught_iter += 1
+            elif caught_len == 2:
+                message += caught_words[0] + " or " + caught_words[1] #Format the message in the form of "Please do not use a or b. It is..."
+            else:
+                message += caught_words[0] #Format the message in the form of "Please do not use a. It is..."
+            message += ". It is derogatory and a slur. Please use 'trans woman' instead.\n\n_____\n\n This is a bot."
             try:
                 comment.reply(message) #reply to comment
                 print("Replied to comment by " + author)
