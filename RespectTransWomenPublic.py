@@ -5,7 +5,7 @@ r = praw.Reddit(user_agent='Transphobia Notifier by /u/RespectTransWomenBot',
                          username='RespectTransWomenBot', password=base64.b64decode(b"YOURPASSWORDHERE").decode("utf-8", "ignore"))
 r.read_only = False #False by default but better to keep as is incase it changes in the future
 subreddit = r.subreddit("ShrellexBotTesting") #get the subreddit. "all" for all comments
-f = open("D:\Reddit Bots\Respect Trans Women\repliedto.txt", "r+")
+f = open("D:\Reddit Bots\Respect Trans Women\\repliedto.txt", "r+")
 
 #blockedsubbreddits.txt formatting:
 #subredditname\n (no \n on last line)
@@ -13,7 +13,7 @@ f = open("D:\Reddit Bots\Respect Trans Women\repliedto.txt", "r+")
 #traa
 #gaysoundsshitposts
 blocked_subreddits = [] #Initialize it so the bot doesn't crash if we can't open the file
-with open("D:\Reddit Bots\Respect Trans Women\blockedsubreddits.txt", "r") as fs: #Path to .txt containing subs we don't post in
+with open("D:\Reddit Bots\Respect Trans Women\\blockedsubreddits.txt", "r") as fs: #Path to .txt containing subs we don't post in
     blocked_subreddits = fs.read().lower().split('\n')
 
 #triggerwords.txt formatting:
@@ -22,7 +22,7 @@ with open("D:\Reddit Bots\Respect Trans Women\blockedsubreddits.txt", "r") as fs
 #shemale
 #ladyboy
 trigger_words = ["shemale", "ladyboy", "tranny", "trannie", "she-man", "transvestite", "chick with dick", "chicks with dicks", "dickgirl", "men with tits", "heshe", "he-she"] #Initialize it so the bot doesn't crash if we can't open the file
-with open("D:\Reddit Bots\Respect Trans Women\triggerwords.txt", "r") as fs: #Path to .txt containing words we look for
+with open("D:\Reddit Bots\Respect Trans Women\\triggerwords.txt", "r") as fs: #Path to .txt containing words we look for
     trigger_words = fs.read().lower().split('\n')
 
 comments = subreddit.stream.comments() # get the comment stream
