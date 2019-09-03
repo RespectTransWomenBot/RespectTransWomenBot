@@ -28,8 +28,6 @@ with open("D:\Reddit Bots\Respect Trans Women\\triggerwords.txt", "r") as fs: #P
 comments = subreddit.stream.comments() # get the comment stream
 x = 1 #for the counter
 for comment in comments: #for each comment in the comments stream. the current comment being processed is called "comment"
-    print("found new comment! processing... (" + str(x) + ")") #the str(x) thing is printing the number of the comment being proccesed
-    x += 1 #add 1 to the number
     if str(comment.subreddit).lower() in blocked_subreddits: #Check if we have the subreddit blacklisted since filtering subreddits with PRAW only works on submissions and not comments
         continue
     text = str(comment.body).lower() # Fetch body
@@ -39,8 +37,6 @@ for comment in comments: #for each comment in the comments stream. the current c
         print("Author has been deleted")
         #author was deleted
         continue
-    print(text) #DEBUGGING, REMOVE WHEN WORKING
-    print(author) #SAME
     if author.lower() == "RespectTransWomenBot".lower(): #Don't reply to yourself
         #myself
         print("Comment is by myself")
@@ -50,6 +46,11 @@ for comment in comments: #for each comment in the comments stream. the current c
         if (i in text) and not (i in caught_words): #Check if the comment contains a word we're looking for. not (i in caught_words) is technically redundant but prevents the word being mentioned by the bot multiple times if it's repeated in trigger_words
             caught_words.append(i)
     if caught_words:
+        print("found a slur! processing... (" + str(x) + ")") #the str(x) thing is printing the number of the comment being proccesed
+        print(author) #DEBUGGING, REMOVE WHEN WORKING
+        print(str(comment.id)) #SAME
+        print(text) #SAME
+        print(caught_words) #SAME
         if comment.id in f.read(): #if the comment is already in the file, bot has replied to it.
             print("ALREADY IN FILE")
         else:
@@ -70,6 +71,7 @@ for comment in comments: #for each comment in the comments stream. the current c
             else:
                 message += caught_words[0] #Format the message in the form of "Please do not use a. It is..."
             message += ". It is derogatory and a slur. Please use 'trans woman' instead.\n\n_____\n\n This is a bot."
+            print(message) #DEBUGGING, REMOVE WHEN WORKING
             try:
                 comment.reply(message) #reply to comment
                 print("Replied to comment by " + author)
@@ -78,3 +80,4 @@ for comment in comments: #for each comment in the comments stream. the current c
             f.write(comment.id + "\n")#write comment id to file so it doesn't reply to it again
             if comment.id in f.read():
                 print("Written Successfully!")
+    x += 1 #add 1 to the number
